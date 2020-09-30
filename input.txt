@@ -1,4 +1,4 @@
-select * from asldhals  , asjkdakjbc (asjckjasc.####)
+select * from asldhals  , asjkdakjbc AAAA  (asjckjasc.####)
 ####
 select
 table1,
@@ -8,4 +8,17 @@ table4,
 table3,
 table5,
 ####,
+table6 etc
+
+
+select * from asldhals  , asjkdakjbc st1,st2,st3,st4  (asjckjasc.gpgm)
+gpgm
+select
+table1,
+summary,
+table4,
+sai,
+table3,
+table5,
+gpgm,
 table6 etc

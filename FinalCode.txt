@@ -74,6 +74,184 @@ Function getAttributes(selectedColumn As Range) As String
     getAttributes = attributes
     
 End Function
+#############################################################
+updated1!!
+
+Private Sub CommandButton1_Click()
+
+    TextBox6.Value = TextBox4.Value
+    
+
+End Sub
+
+Private Sub CommandButton2_Click()
+TextBox1.Value = ""
+TextBox2.Value = ""
+TextBox3.Value = ""
+TextBox4.Value = ""
+TextBox6.Value = ""
+End Sub
+
+Sub main()
+    Dim pats As Variant, repl As Variant, i As Integer, finalQuery As String, attrib As String, FileContent As String
+    
+    attrib = ""
+    attrib = getAttributes(Selection)
+    
+    FilePath = "C:\Users\welcome\Desktop\mottotry\input.txt"
+     
+    FileContent = GetText(FilePath)
+    
+    Debug.Print "Initially we have : - "
+    Debug.Print "**********************"
+    Debug.Print FileContent
+    Debug.Print "**********************"
+    
+    pats = Array("####", "!!!!", "@@@@", "$$$$")
+    repl = Array(TextBox1.Value, TextBox2.Value, TextBox3.Value, TextBox4.Value)
+    finalQuery = ""
+    For i = 0 To 3
+        'finalQuery = ReplaceAnchors(FileContent, pats(i), repl(i))
+        ReplaceAnchors FileContent, pats(i), repl(i)
+    Next i
+    
+    'Debug.Print "Finally we got:- "
+    'Debug.Print FileContent
+    TextBox6.Value = FileContent
+End Sub
 
 
+Function GetText(ByVal FilePath As String) As String
+    ' Returns Text from input file
+    
+    Dim FileNum As Integer
+    Dim DataLine As String, Data As String
+    
+    FileNum = FreeFile()
+    
+    Open FilePath For Input As #FileNum
+    
+        While Not EOF(FileNum)
+            Line Input #FileNum, DataLine ' read in data 1 line at a time
+            Data = Data & DataLine & vbNewLine
+        Wend
+
+    'Close Text File
+    Close #FileNum
+    
+    GetText = Data
+End Function
+
+Function ReplaceAnchors(ByRef FileContent As String, ByVal patt As String, ByVal replacement As String)
+    Dim regEx As New regExp
+    regEx.Global = True
+    regEx.Pattern = patt
+    Dim newText As String
+    newText = ""
+    If regEx.Test(FileContent) = True Then
+        newText = regEx.Replace(FileContent, replacement)
+    End If
+    FileContent = newText
+    'ReplaceAnchors = FileContent
+    
+End Function
+
+Function getAttributes(selectedColumn As Range) As String
+    Dim attributes As String
+    attributes = ""
+    
+    For Each c In selectedColumn
+        attributes = attributes & c & ","
+    Next c
+    
+    attributes = Left(attributes, Len(attributes) - 1)
+    
+    getAttributes = attributes
+    
+End Function
+#################################################
+updated2
+Private Sub CommandButton1_Click()
+    main
+End Sub
+Sub main()
+    Dim pats As Variant, repl As Variant, i As Integer, finalQuery As String, attrib As String, FileContent As String
+    
+    attrib = ""
+    'attrib = getAttributes(Selection)
+    
+    FilePath = "C:\Users\welcome\Desktop\mottotry\input.txt"
+     
+    FileContent = GetText(FilePath)
+    
+    Debug.Print "Initially we have : - "
+    Debug.Print "**********************"
+    Debug.Print FileContent
+    Debug.Print "**********************"
+    
+    attrib = Replace(TextBox4.Value, vbNewLine, ",")
+    attrib = Left(attrib, Len(attrib) - 1)
+
+    pats = Array("####", "!!!!", "@@@@", "AAAA")
+    repl = Array(TextBox1.Value, TextBox2.Value, TextBox3.Value, attrib)
+    finalQuery = ""
+    For i = 0 To 3
+        'finalQuery = ReplaceAnchors(FileContent, pats(i), repl(i))
+        ReplaceAnchors FileContent, pats(i), repl(i)
+    Next i
+    
+    Debug.Print "Finally we got:- "
+    Debug.Print FileContent
+    TextBox6.Value = FileContent
+End Sub
+
+
+Function GetText(ByVal FilePath As String) As String
+    ' Returns Text from input file
+    
+    Dim FileNum As Integer
+    Dim DataLine As String, Data As String
+    
+    FileNum = FreeFile()
+    
+    Open FilePath For Input As #FileNum
+    
+        While Not EOF(FileNum)
+            Line Input #FileNum, DataLine ' read in data 1 line at a time
+            Data = Data & DataLine & vbNewLine
+        Wend
+
+    'Close Text File
+    Close #FileNum
+    
+    GetText = Data
+End Function
+
+Function ReplaceAnchors(ByRef FileContent As String, ByVal patt As String, ByVal replacement As String)
+    Dim regEx As New regExp
+    regEx.Global = True
+    regEx.Pattern = patt
+    Dim newText As String
+    newText = ""
+    If regEx.Test(FileContent) = True Then
+        newText = regEx.Replace(FileContent, replacement)
+    End If
+    FileContent = newText
+    ReplaceAnchors = FileContent
+    
+End Function
+
+Function getAttributes(selectedColumn As Range) As String
+    Dim attributes As String
+    attributes = ""
+    
+    For Each c In selectedColumn
+        attributes = attributes & c & ","
+    Next c
+    
+    attributes = Left(attributes, Len(attributes) - 1)
+    
+    getAttributes = attributes
+    
+End Function
 
