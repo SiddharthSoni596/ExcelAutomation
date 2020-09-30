@@ -74,3 +74,6 @@ Function getAttributes(selectedColumn As Range) As String
     getAttributes = attributes
     
 End Function
+
+
+
