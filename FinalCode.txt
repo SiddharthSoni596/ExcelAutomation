@@ -1,0 +1,76 @@
+Sub main()
+    Dim pats As Variant, repl As Variant, i As Integer, finalQuery As String, attrib As String, FileContent As String
+    
+    attrib = ""
+    attrib = getAttributes(Selection)
+    
+    FilePath = "C:\Users\welcome\Desktop\mottotry\input.txt"
+     
+    FileContent = GetText(FilePath)
+    
+    Debug.Print "Initially we have : - "
+    Debug.Print "**********************"
+    Debug.Print FileContent
+    Debug.Print "**********************"
+    
+    pats = Array("####", "!!!!", "@@@@", "$$$$")
+    repl = Array("STUDY_NAME", "PANNEL_NAME", "PANNEL_TYPE", attrib)
+    finalQuery = ""
+    For i = 0 To 3
+        'finalQuery = ReplaceAnchors(FileContent, pats(i), repl(i))
+        ReplaceAnchors FileContent, pats(i), repl(i)
+    Next i
+    
+    Debug.Print "Finally we got:- "
+    Debug.Print FileContent
+End Sub
+
+
+Function GetText(ByVal FilePath As String) As String
+    ' Returns Text from input file
+    
+    Dim FileNum As Integer
+    Dim DataLine As String, Data As String
+    
+    FileNum = FreeFile()
+    
+    Open FilePath For Input As #FileNum
+    
+        While Not EOF(FileNum)
+            Line Input #FileNum, DataLine ' read in data 1 line at a time
+            Data = Data & DataLine & vbNewLine
+        Wend
+
+    'Close Text File
+    Close #FileNum
+    
+    GetText = Data
+End Function
+
+Function ReplaceAnchors(ByRef FileContent As String, ByVal patt As String, ByVal replacement As String)
+    Dim regEx As New regExp
+    regEx.Global = True
+    regEx.pattern = patt
+    Dim newText As String
+    newText = ""
+    If regEx.Test(FileContent) = True Then
+        newText = regEx.Replace(FileContent, replacement)
+    End If
+    FileContent = newText
+    'ReplaceAnchors = FileContent
+    
+End Function
+
+Function getAttributes(selectedColumn As Range) As String
+    Dim attributes As String
+    attributes = ""
+    
+    For Each c In selectedColumn
+        attributes = attributes & c & ","
+    Next c
+    
+    attributes = Left(attributes, Len(attributes) - 1)
+    
+    getAttributes = attributes
+    
+End Function

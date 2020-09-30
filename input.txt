@@ -1,0 +1,11 @@
+select * from asldhals  , asjkdakjbc (asjckjasc.####)
+####
+select
+table1,
+!!!!,
+table4,
+@@@@,
+table3,
+table5,
+####,
+table6 etc
